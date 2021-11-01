@@ -1,0 +1,27 @@
+import os
+import requests
+
+class YaUploader:
+
+    def __init__(self, token: str):
+        self.token = token
+
+    def upload(self, file_path: str):
+        """Метод загруджает файл file_path на яндекс диск"""
+
+        url = 'https://cloud-api.yandex.net/v1/disk/resources/upload'
+        headers = {"Authorization": f'OAuth {self.token}'}
+        params = {'path': file_path,
+                   'overwrite': 'true'}
+        upload_link = requests.get(url, headers=headers, params=params).json()['href']
+        print(upload_link)
+       
+
+
+
+        return 'Вернуть ответ об успешной загрузке'
+
+
+if __name__ == '__main__':
+    uploader = YaUploader('AQAAAABB3QMIAADLW87UJQ9T8UyirDqxCmU15pQ')
+    result = uploader.upload('/newFile.rtf')
